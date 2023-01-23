@@ -24,7 +24,7 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'HDFCLIFE','NAUKRI']
 
 #Demo list
-company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE']
+company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','RBLBANK']
 
 fetchedDataList=[]
 
@@ -53,6 +53,6 @@ for company in fetchedDataList:
     print(str(i)+")")
     i+=1
     t.get_table(company,startTime)
-    
+
 # os.system("cls")
 print("Task completed")
