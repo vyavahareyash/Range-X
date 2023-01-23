@@ -22,7 +22,7 @@ def get_table(company,startTime,timeFolder):
 #     print(dataset)
     dataset.reset_index(inplace=True,drop=True)
 
-    cols=['Date','S_Window','pDelta','nDelta','tReversal']
+    cols=['Date','S_Window','Candle_size','pDelta','nDelta','tReversal']
     table = pd.DataFrame(columns=cols)
 
     i=0
@@ -84,6 +84,7 @@ def get_table(company,startTime,timeFolder):
         upperBound=high+pMos
         lowerBound=low-nMos
         sw=f'{lowerBound}-{upperBound}'
+        candle_size = abs(high-low)
 
         pDelta = max(dayset[day]['high']) - upperBound
         nDelta = lowerBound - min(dayset[day]['low'])
@@ -104,7 +105,7 @@ def get_table(company,startTime,timeFolder):
             if((typearr[j:j+2]==pattern1)or(typearr[j:j+2]==pattern2)or(typearr[j:j+2]==pattern3)or(typearr[j:j+2]==pattern4)):
                 tr+=1
 
-        table.loc[day]=[date,sw,pDelta,nDelta,tr]
+        table.loc[day]=[date,sw,candle_size,pDelta,nDelta,tr]
 
     table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company))
     # os.system("cls")

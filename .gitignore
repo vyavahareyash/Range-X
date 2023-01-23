@@ -1,5 +1,6 @@
 data/
 tables/
+test/
 *.png
 #Python.gitignore
 
