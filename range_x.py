@@ -26,6 +26,7 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
 #Demo list
 company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','RBLBANK','MUTHOOTFIN']
 
+
 fetchedDataList=[]
 
 round=1
