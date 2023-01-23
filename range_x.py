@@ -24,6 +24,7 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'HDFCLIFE','NAUKRI']
 
 #Demo list
+
 company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','RBLBANK']
 
 fetchedDataList=[]
