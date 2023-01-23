@@ -1,6 +1,6 @@
+import os
 import numpy as np 
 import pandas as pd
-import os
 
 corrExists=os.path.exists("correlations")
 if(not corrExists):
