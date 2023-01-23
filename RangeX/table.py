@@ -1,4 +1,4 @@
-def get_table(company,startTime):
+def get_table(company,startTime,timeFolder):
     import numpy as np
     import pandas as pd
 
@@ -106,7 +106,7 @@ def get_table(company,startTime):
 
         table.loc[day]=[date,sw,pDelta,nDelta,tr]
 
-    table.to_csv("tables/{}_table.csv".format(company))
+    table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company))
     # os.system("cls")
     print("Table created for {}\n".format(company))
 
