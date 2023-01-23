@@ -24,7 +24,7 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'HDFCLIFE','NAUKRI']
 
 #Demo list
-company_list = ['ADANIENT']
+company_list = ['ADANIENT','RBLBANK','GMRINFRA','GRASIM','IGL']
 
 
 fetchedDataList=[]
@@ -48,7 +48,7 @@ print("Successfully fetched "+str(fetchedDataList)+"\n")
 print("Failed to fetch "+str(failedList)+"\n")
 
 
-startTime='12:30'
+startTime='11:30'
 timeFolder=f'{startTime[:2]}_{startTime[3:]}'
 timeExists=os.path.exists("tables/"+timeFolder)
 if(not timeExists):

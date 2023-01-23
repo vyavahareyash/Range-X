@@ -107,7 +107,7 @@ def get_table(company,startTime,timeFolder):
 
         table.loc[day]=[date,sw,candle_size,pDelta,nDelta,tr]
 
-    table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company))
+    table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company),index=False)
     # os.system("cls")
     print("Table created for {}\n".format(company))
 
