@@ -24,7 +24,11 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'HDFCLIFE','NAUKRI']
 
 #Demo list
-company_list = ['ADANIENT','RBLBANK','GMRINFRA','GRASIM','IGL']
+company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BAJFINANCE','BALKRISIND','AUROPHARMA',
+     'BANKBARODA','BHARTIARTL','BEL','BPCL','BRITANNIA','CENTURYTEX','CANBK','CESC','COALINDIA','CIPLA',
+     'COLPAL','CONCOR','DIVISLAB','DLF','GLENMARK','DRREDDY','EQUITAS','GODREJCP','EXIDEIND','HINDALCO',
+     'FEDERALBNK','HINDPETRO','HAVELLS','HCLTECH','HDFC','ICICIBANK','IDFCFIRSTB','JSWSTEEL','INDIGO',
+     'INFY','IOC','JUBLFOOD','JINDALSTEL','ADANIENT','RBLBANK','GMRINFRA','GRASIM','IGL']
 
 
 fetchedDataList=[]
@@ -48,7 +52,7 @@ print("Successfully fetched "+str(fetchedDataList)+"\n")
 print("Failed to fetch "+str(failedList)+"\n")
 
 
-startTime='11:30'
+startTime='12:30'
 timeFolder=f'{startTime[:2]}_{startTime[3:]}'
 timeExists=os.path.exists("tables/"+timeFolder)
 if(not timeExists):
