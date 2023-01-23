@@ -24,8 +24,8 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'HDFCLIFE','NAUKRI']
 
 #Demo list
+company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','RBLBANK','MUTHOOTFIN']
 
-company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','RBLBANK']
 
 fetchedDataList=[]
 
@@ -49,11 +49,15 @@ print("Failed to fetch "+str(failedList)+"\n")
 
 
 startTime='12:30'
+timeFolder=f'{startTime[:2]}_{startTime[3:]}'
+timeExists=os.path.exists("tables/"+timeFolder)
+if(not timeExists):
+    os.makedirs("tables/"+timeFolder)
 i=1
 for company in fetchedDataList:
     print(str(i)+")")
     i+=1
-    t.get_table(company,startTime)
+    t.get_table(company,startTime,timeFolder)
 
 # os.system("cls")
 print("Task completed")
