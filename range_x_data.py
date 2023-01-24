@@ -1,12 +1,9 @@
 import os
-from RangeX import data as d, table as t
+from RangeX import data as d
 
 dataExists=os.path.exists("data")
-tablesExists=os.path.exists("tables")
 if(not dataExists):
     os.makedirs("data")
-if(not tablesExists):
-    os.makedirs("tables")
 
 company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BAJFINANCE','BALKRISIND','AUROPHARMA',
      'BANKBARODA','BHARTIARTL','BEL','BPCL','BRITANNIA','CENTURYTEX','CANBK','CESC','COALINDIA','CIPLA',
@@ -50,18 +47,6 @@ while(round<=3):
 print("{} data files fetched successfully\n".format(len(fetchedDataList)))
 print("Successfully fetched "+str(fetchedDataList)+"\n")
 print("Failed to fetch "+str(failedList)+"\n")
-
-
-startTime='12:00'
-timeFolder=f'{startTime[:2]}_{startTime[3:]}'
-timeExists=os.path.exists("tables/"+timeFolder)
-if(not timeExists):
-    os.makedirs("tables/"+timeFolder)
-i=1
-for company in fetchedDataList:
-    print(str(i)+")")
-    i+=1
-    t.get_table(company,startTime,timeFolder)
 
 # os.system("cls")
 print("Task completed")
