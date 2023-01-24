@@ -11,7 +11,7 @@ for i in range(len(fetchedDataList)):
 
 # fetchedDataList = ['RELIANCE_data']
 
-startTime='10:15'
+startTime=input('Enter start time [hh:mm] = ')
 timeFolder=f'{startTime[:2]}_{startTime[3:]}'
 timeExists=os.path.exists("tables/"+timeFolder)
 if(not timeExists):

@@ -111,8 +111,10 @@ def get_table_count(company,startTime,pMos,nMos):
 
 df = pd.DataFrame(columns=['pMos','nMos','count'])
 
-company='RELIANCE'
-startTime='10:15'
+# company='RELIANCE'
+# startTime='10:15'
+company = input('Enter company name: ')
+startTime=input('Enter start time [hh:mm] = ')
 pMosList=nMosList = np.arange(10)
 
 plist=[]
