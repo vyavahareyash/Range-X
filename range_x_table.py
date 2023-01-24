@@ -9,7 +9,9 @@ fetchedDataList = os.listdir('data')
 for i in range(len(fetchedDataList)):
     fetchedDataList[i]=fetchedDataList[i].split('.')[0]
 
-startTime='12:00'
+# fetchedDataList = ['RELIANCE_data']
+
+startTime=input('Enter start time [hh:mm] = ')
 timeFolder=f'{startTime[:2]}_{startTime[3:]}'
 timeExists=os.path.exists("tables/"+timeFolder)
 if(not timeExists):
