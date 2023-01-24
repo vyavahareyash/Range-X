@@ -20,5 +20,4 @@ for time in timeList:
         corrList.append(size.corr(reversal))
     corrTable['correlation']=np.array(corrList)
     corrTable.to_csv('correlations/{}_corr.csv'.format(time),index=False)
-        
-        
+    
