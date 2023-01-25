@@ -115,8 +115,10 @@ df = pd.DataFrame(columns=['pMos','nMos','count'])
 # startTime='10:15'
 company = input('Enter company name: ')
 startTime=input('Enter start time [hh:mm] = ')
-pMosList=nMosList = np.arange(10)
-
+pMosLimit = int(input('Enter pMos Limit = ')) 
+nMosLimit = int(input('Enter nMos Limit = ')) 
+pMosList = np.arange(pMosLimit)
+nMosList = np.arange(nMosLimit)
 plist=[]
 nlist=[]
 clist=[]
@@ -144,5 +146,5 @@ if(not marginsExists):
 if(not timeExists):
     os.makedirs("margins/{}".format(timeFolder))
 
-df.to_csv('margins/{}/{}_margin.csv'.format(timeFolder,company))
+df.to_csv('margins/{}/{}_margin.csv'.format(timeFolder,company), index=False)
 print('Task completed')

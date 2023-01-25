@@ -52,7 +52,7 @@ print("Successfully fetched "+str(fetchedDataList)+"\n")
 print("Failed to fetch "+str(failedList)+"\n")
 
 
-startTime='12:00'
+startTime=input('Enter start time [hh:mm] = ')
 timeFolder=f'{startTime[:2]}_{startTime[3:]}'
 timeExists=os.path.exists("tables/"+timeFolder)
 if(not timeExists):
