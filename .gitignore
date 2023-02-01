@@ -3,6 +3,7 @@ tables/
 correlations/
 margins/
 test/
+*.csv
 *.png
 #Python.gitignore
 
