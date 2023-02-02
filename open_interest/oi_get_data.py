@@ -62,6 +62,8 @@ for stock in company_list:
         OI_df['Change_in_VWAP']=OI_df.VWAP.sub(OI_df.VWAP.shift(1))
         OI_df['Change_in_VWAP']=(OI_df['Change_in_VWAP'])/(OI_df['VWAP'])
         OI_df['Change_in_VWAP']=100*OI_df['Change_in_VWAP']
+        
+        OI_df["PerDelivery"] = (OI_df["Delivery"]/OI_df["Volume"])*100
 
         OI_df.to_csv("oi_data/OI_combined_{}.csv".format(stock))
         print("Successfully fetched data for {}".format(stock))
