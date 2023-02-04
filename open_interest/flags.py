@@ -22,7 +22,7 @@ for company in company_list:
         j+=1
         data = pd.read_csv("oi_data_2/{}".format(company))
         n = len(data)
-        # data.drop(np.arange(n-5,n),inplace=True)
+        data.drop(np.arange(n-5,n),inplace=True)
 
         delLow = data['PerDelivery'].quantile(0.05)
         delHigh = data['PerDelivery'].quantile(0.95)
