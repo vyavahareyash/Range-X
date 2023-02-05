@@ -4,6 +4,7 @@ correlations/
 margins/
 test/
 *.csv
+*.xlsx
 *.png
 #Python.gitignore
 

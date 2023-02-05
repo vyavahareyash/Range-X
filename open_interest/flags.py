@@ -12,7 +12,7 @@ import pandas as pd
 
 company_list = os.listdir('oi_data_2')
 
-print("Fetching data for {} companies".format(len(company_list)))
+print("Creating flags for {} companies".format(len(company_list)))
 
 j=1
 
