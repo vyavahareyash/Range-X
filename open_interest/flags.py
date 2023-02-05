@@ -3,9 +3,9 @@ os.system("pip install pandas")
 os.system("pip install numpy")
 os.system("cls")
 
-flagExists=os.path.exists("flags_2")
+flagExists=os.path.exists("flags_new")
 if(not flagExists):
-    os.makedirs("flags_2")
+    os.makedirs("flags_new")
 
 import numpy as np
 import pandas as pd
@@ -35,26 +35,34 @@ for company in company_list:
         oiFlag=[]
         delFlag = []
         for i in range(len(data)):
-            if data.loc[i]['PerDelivery'] <= delLow or data.loc[i]['PerDelivery'] >= delHigh:
+            if data.loc[i]['PerDelivery'] <= delLow:
+                delFlag.append(-1)
+            elif data.loc[i]['PerDelivery'] >= delHigh:
                 delFlag.append(1)
             else:
                 delFlag.append(0)
                 
-            if data.loc[i]['Change_in_OI'] <= oiLow or data.loc[i]['Change_in_OI'] >= oiHigh:
+            if data.loc[i]['Change_in_OI'] <= oiLow:
+                oiFlag.append(-1)
+            elif data.loc[i]['Change_in_OI'] >= oiHigh:
                 oiFlag.append(1)
             else:
                 oiFlag.append(0)
             
-            if data.loc[i]['Change_in_VWAP'] <= vwapLow or data.loc[i]['Change_in_VWAP'] >= vwapHigh:
+            if data.loc[i]['Change_in_VWAP'] <= vwapLow:
+                vwapFlag.append(-1)
+            elif data.loc[i]['Change_in_VWAP'] >= vwapHigh:
                 vwapFlag.append(1)
             else:
                 vwapFlag.append(0)
                 
-        data['DeliveryFlag'] = np.array(delFlag)
+        
         data['OIFlag'] = np.array(oiFlag)
         data['VWAPFlag'] = np.array(vwapFlag)
-        data['TotalFlag']=data['DeliveryFlag']+data['OIFlag']+data['VWAPFlag']
-        data.to_csv('flags_2/{}'.format(company))
+        data['DeliveryFlag'] = np.array(delFlag)
+        data['TotalFlag']=abs(data['DeliveryFlag'])+abs(data['OIFlag'])+abs(data['VWAPFlag'])
+        data = data.loc[:,['Date', 'Symbol', 'Open Interest', 'Open Interest.1', 'OI_Combined', 'VWAP', 'Volume', 'Delivery', 'Change_in_OI', 'OIFlag', 'Change_in_VWAP', 'VWAPFlag', 'PerDelivery', 'DeliveryFlag', 'TotalFlag']]
+        data.to_csv('flags_new/{}'.format(company), index = False)
         print('Flags created for {}'.format(company))
         
     except Exception as e:
