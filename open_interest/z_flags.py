@@ -57,8 +57,8 @@ for company in company_list:
         data['z_del'] = (data['PerDelivery']-mean['PerDelivery']) / std['PerDelivery']
         data['z_vwap'] = (data['Change_in_VWAP']-mean['Change_in_VWAP']) / std['Change_in_VWAP']
 
-        pthreshold = 2
-        nthreshold = -2
+        pthreshold = 1.5
+        nthreshold = -1.5
         vwapFlag=[]
         oiFlag=[]
         delFlag = []
