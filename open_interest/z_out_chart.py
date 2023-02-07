@@ -14,15 +14,28 @@ import seaborn as sns
 import math
 import scipy as sp
 
-chartExists=os.path.exists("z_out_charts")
-if(not chartExists):
-    os.makedirs("z_out_charts")
-    
 dataExists=os.path.exists("z_flags")
 if(dataExists):
     company_list = os.listdir('z_flags')
 else:
     exit('Data does not exists')
+
+chartExists=os.path.exists("z_out_charts")
+if(not chartExists):
+    os.makedirs("z_out_charts")
+    
+chartExists=os.path.exists("z_out_charts/Delivery")
+if(not chartExists):
+    os.makedirs("z_out_charts/Delivery")
+
+chartExists=os.path.exists("z_out_charts/OI")
+if(not chartExists):
+    os.makedirs("z_out_charts/OI")
+    
+chartExists=os.path.exists("z_out_charts/VWAP")
+if(not chartExists):
+    os.makedirs("z_out_charts/VWAP")
+    
     
 delList=[]
 oiList=[]
@@ -94,7 +107,7 @@ for company in company_list:
         g.map_dataframe(annotate_del)
         plt.legend()
         plt.title('{}'.format(company.split('.')[0]))
-        plt.savefig('z_out_charts/Delivery_{}.png'.format(company.split('.')[0]),dpi=500)
+        plt.savefig('z_out_charts/Delivery/Delivery_{}.png'.format(company.split('.')[0]),dpi=500)
         
         plt.clf()
         f_data=data[abs(data['OIFlag'])>0]
@@ -111,7 +124,7 @@ for company in company_list:
         g.map_dataframe(annotate_oi)
         plt.legend()
         plt.title('{}'.format(company.split('.')[0]))
-        plt.savefig('z_out_charts/OI_{}.png'.format(company.split('.')[0]),dpi=500)
+        plt.savefig('z_out_charts/OI/OI_{}.png'.format(company.split('.')[0]),dpi=500)
 
         plt.clf()
         f_data=data[abs(data['VWAPFlag'])>0]
@@ -128,7 +141,7 @@ for company in company_list:
         g.map_dataframe(annotate_vwap)
         plt.legend()
         plt.title('{}'.format(company.split('.')[0]))
-        plt.savefig('z_out_charts/VWAP_{}.png'.format(company.split('.')[0]),dpi=500)
+        plt.savefig('z_out_charts/VWAP/VWAP_{}.png'.format(company.split('.')[0]),dpi=500)
         plt.clf()
         plt.close()
         
