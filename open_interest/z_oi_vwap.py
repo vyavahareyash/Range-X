@@ -35,13 +35,19 @@ def get_concat_h(im1, im2):
     dst.paste(im2, (im1.width, 0))
     return dst
 
+gCount=0
+rCount=0
+gList=[]
+rList=[]
+
 for company in company_list:
     try:
         data = pd.read_excel('z_flags/{}'.format(company))
         
         plt.clf()
         f1 = sns.lmplot(x='VWAP', y='OI_Combined', data=data)
-        f1.map_dataframe(annotate)        
+        f1.map_dataframe(annotate)
+        r1, p = sp.stats.pearsonr(data['VWAP'], data['OI_Combined'])
         plt.scatter(x='VWAP', y='OI_Combined', data=data[data['TotalFlag']>0],color='red')
         plt.title('{}'.format(company.split('.')[0]))
         plt.grid(color='lightgrey')
@@ -52,7 +58,16 @@ for company in company_list:
         plt.clf()
         f2 = sns.lmplot(x='VWAP', y='OI_Combined', data=data)
         f2.map_dataframe(annotate)
-        plt.title('{} flags'.format(company.split('.')[0]))
+        r2, p = sp.stats.pearsonr(data['VWAP'], data['OI_Combined'])
+        if abs(r2) > abs(r1): 
+            color='green'
+            gCount+=1
+            gList.append(company.split('.')[0])
+        else: 
+            color='red'
+            rCount+=1
+            rList.append(company.split('.')[0])
+        plt.title('{} flags'.format(company.split('.')[0]),color=color)
         plt.grid(color='lightgrey')
         plt.savefig('z_oi_vwap_plots/img2.png',dpi=500)
         
@@ -71,3 +86,5 @@ for company in company_list:
 
 os.remove('z_oi_vwap_plots/img1.png')
 os.remove('z_oi_vwap_plots/img2.png')
+
+print('{} Charts show improved relation after removing flags\n{}\n{} Charts show decline in relation after removing flags\n{}'.format(gCount,gList,rCount,rList))
