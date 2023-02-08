@@ -9,9 +9,9 @@ from datetime import date
 import pandas as pd
 import numpy as np
 
-oiExists=os.path.exists("oi_data_2")
+oiExists=os.path.exists("oi_data")
 if(not oiExists):
-    os.makedirs("oi_data_2")
+    os.makedirs("oi_data")
 
 # Demo List
 company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BAJFINANCE','BALKRISIND','AUROPHARMA',
@@ -46,12 +46,12 @@ for stock in company_list:
     try:
         print("\n"+str(i)+")")
         i += 1
-        start=start=date(2023,1,1)
-        end=date(2023,2,23)
-        end2=date(2023,2,23)
+        start=start=date(2022,12,1)
+        end=date(2023,1,25)
+        end2=date(2023,1,25)
 
-        data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2023,1,25))
-        data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,2,23))
+        data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2022,12,29))
+        data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,1,25))
 
         data_fut=data_fut.reset_index()
         data_fut2=data_fut2.reset_index()
@@ -80,7 +80,7 @@ for stock in company_list:
         
         OI_df["PerDelivery"] = (OI_df["Delivery"]/OI_df["Volume"])*100
 
-        OI_df.to_csv("oi_data_2/OI_combined_{}.csv".format(stock))
+        OI_df.to_csv("oi_data/OI_combined_{}.csv".format(stock))
         print("Successfully fetched data for {}".format(stock))
         success_list.append(stock)
         success_count+=1

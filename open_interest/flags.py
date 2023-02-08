@@ -1,16 +1,17 @@
 import os
+
 os.system("pip install pandas")
 os.system("pip install numpy")
 os.system("cls")
 
-flagExists=os.path.exists("flags_new")
+flagExists=os.path.exists("flags")
 if(not flagExists):
-    os.makedirs("flags_new")
+    os.makedirs("flags")
 
 import numpy as np
 import pandas as pd
 
-company_list = os.listdir('oi_data_2')
+company_list = os.listdir('oi_data')
 
 print("Creating flags for {} companies".format(len(company_list)))
 
@@ -20,9 +21,9 @@ for company in company_list:
     try:
         print('\n'+str(j)+')')
         j+=1
-        data = pd.read_csv("oi_data_2/{}".format(company))
+        data = pd.read_csv("oi_data/{}".format(company))
         n = len(data)
-        # data.drop(np.arange(n-5,n),inplace=True)
+        data.drop(np.arange(n-5,n),inplace=True)
 
         delLow = data['PerDelivery'].quantile(0.05)
         delHigh = data['PerDelivery'].quantile(0.95)
@@ -62,7 +63,7 @@ for company in company_list:
         data['DeliveryFlag'] = np.array(delFlag)
         data['TotalFlag']=abs(data['DeliveryFlag'])+abs(data['OIFlag'])+abs(data['VWAPFlag'])
         data = data.loc[:,['Date', 'Symbol', 'Open Interest', 'Open Interest.1', 'OI_Combined', 'VWAP', 'Volume', 'Delivery', 'Change_in_OI', 'OIFlag', 'Change_in_VWAP', 'VWAPFlag', 'PerDelivery', 'DeliveryFlag', 'TotalFlag']]
-        data.to_csv('flags_new/{}'.format(company), index = False)
+        data.to_csv('flags/{}'.format(company), index = False)
         print('Flags created for {}'.format(company))
         
     except Exception as e:
