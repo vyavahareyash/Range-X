@@ -53,12 +53,14 @@ for company in company_list:
         data.drop(np.arange(n-5,n),inplace=True)
         mean = data.mean()
         std = data.std()
+        
         data['z_oi'] = (data['Change_in_OI']-mean['Change_in_OI']) / std['Change_in_OI']
         data['z_del'] = (data['PerDelivery']-mean['PerDelivery']) / std['PerDelivery']
         data['z_vwap'] = (data['Change_in_VWAP']-mean['Change_in_VWAP']) / std['Change_in_VWAP']
 
         pthreshold = 1.5
         nthreshold = -1.5
+        
         vwapFlag=[]
         oiFlag=[]
         delFlag = []
@@ -88,7 +90,9 @@ for company in company_list:
         data['OIFlag'] = np.array(oiFlag)
         data['VWAPFlag'] = np.array(vwapFlag)
         data['DeliveryFlag'] = np.array(delFlag)
+        
         data['TotalFlag']=abs(data['DeliveryFlag'])+abs(data['OIFlag'])+abs(data['VWAPFlag'])
+        
         data = data.loc[:,['Date', 'Symbol', 'Open Interest', 'Open Interest.1', 'OI_Combined', 'VWAP', 'Volume', 'Delivery', 'Change_in_OI', 'OIFlag', 'z_oi', 'Change_in_VWAP', 'VWAPFlag', 'z_vwap', 'PerDelivery', 'DeliveryFlag', 'z_del', 'TotalFlag']]
         
         data.style.apply(color_red, subset=['OIFlag', 'VWAPFlag', 'DeliveryFlag'], 

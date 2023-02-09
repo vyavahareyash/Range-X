@@ -81,7 +81,7 @@ for company in company_list:
         
         data['index'] = data.index
         
-        delUB = (pthreshold * data['PerDelivery'].std()) + data['PerDelivery'].mean() 
+        delUB = (pthreshold * data['PerDelivery'].std()) + data['PerDelivery'].mean()
         oiUB = (pthreshold * data['Change_in_OI'].std()) + data['Change_in_OI'].mean()
         vwapUB = (pthreshold * data['Change_in_VWAP'].std()) + data['Change_in_VWAP'].mean()
         delLB =  (nthreshold * data['PerDelivery'].std()) + data['PerDelivery'].mean()
