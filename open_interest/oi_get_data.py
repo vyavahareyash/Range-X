@@ -1,24 +1,19 @@
 import os
-os.system("pip install nsepy")
-os.system("pip install datetime")
-os.system("pip install pandas")
-os.system("pip install numpy")
-os.system("cls")
+# os.system("pip install nsepy")
+# os.system("pip install datetime")
+# os.system("pip install pandas")
+# os.system("cls")
+
 from nsepy import get_history
 from datetime import date
 import pandas as pd
-import numpy as np
 
-oiExists=os.path.exists("oi_data_2")
+destination_folder = "oi_data_JAN_FEB"
+
+oiExists=os.path.exists(destination_folder)
 if(not oiExists):
-    os.makedirs("oi_data_2")
+    os.makedirs(destination_folder)
 
-# Demo List
-company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BAJFINANCE','BALKRISIND','AUROPHARMA',
-     'BANKBARODA','BHARTIARTL','BEL','BPCL','BRITANNIA','CENTURYTEX','CANBK','CESC','COALINDIA','CIPLA',
-     'COLPAL','CONCOR','DIVISLAB','DLF','GLENMARK','DRREDDY','EQUITAS','GODREJCP','EXIDEIND','HINDALCO',
-     'FEDERALBNK','HINDPETRO','HAVELLS','HCLTECH','HDFC','ICICIBANK','IDFCFIRSTB','JSWSTEEL','INDIGO',
-     'INFY','IOC','JUBLFOOD','JINDALSTEL','ADANIENT','RBLBANK','GMRINFRA','GRASIM','IGL']
 
 company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BAJFINANCE','BALKRISIND','AUROPHARMA',
      'BANKBARODA','BHARTIARTL','BEL','BPCL','BRITANNIA','CENTURYTEX','CANBK','CESC','COALINDIA','CIPLA',
@@ -35,8 +30,11 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'TATACHEM','AMBUJACEM','RBLBANK','GMRINFRA','GRASIM','IGL','MUTHOOTFIN','UBL','IDEA','AMARAJABAT','YESBANK','BANDHANBNK',
      'HDFCLIFE','NAUKRI']
 
-no_comp = len(company_list)
-print("Fetching data for {}".format(no_comp))
+# Demo List
+# company_list = ['PVR']
+
+n_comp = len(company_list)
+print(f"Fetching data for {n_comp}")
 success_count = 0
 fail_count = 0
 i = 1
@@ -46,17 +44,25 @@ for stock in company_list:
     try:
         print("\n"+str(i)+")")
         i += 1
+        
         start=start=date(2023,1,1)
         end=date(2023,2,23)
         end2=date(2023,2,23)
-
+        # start=start=date(2022,12,1)
+        # end=date(2023,1,25)
+        # end2=date(2023,1,25)
+        
         data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2023,1,25))
         data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,2,23))
+        # data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2022,12,29))
+        # data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,1,25))
 
         data_fut=data_fut.reset_index()
         data_fut2=data_fut2.reset_index()
 
+        # data_vwap=get_history(symbol=stock, start=date(2022,12,1), end=date(2023,1,25))
         data_vwap=get_history(symbol=stock, start=date(2023,1,1), end=date(2023,2,23))
+        
         data_vwap=data_vwap.reset_index()
 
         OI_df= pd.concat([data_fut2['Open Interest'],data_fut['Open Interest']],axis=1)
@@ -80,13 +86,13 @@ for stock in company_list:
         
         OI_df["PerDelivery"] = (OI_df["Delivery"]/OI_df["Volume"])*100
 
-        OI_df.to_csv("oi_data_2/OI_combined_{}.csv".format(stock))
-        print("Successfully fetched data for {}".format(stock))
+        OI_df.to_csv(f"{destination_folder}/{stock}_OI_combined.csv")
+        print(f"Successfully fetched data for {stock}")
         success_list.append(stock)
         success_count+=1
         
     except Exception as e:
-        print("Failed to fetch data for {}".format(stock))
+        print(f"Failed to fetch data for {stock}")
         print(str(e))
         fail_count += 1
         fail_list.append(stock)
@@ -97,4 +103,5 @@ for stock in company_list:
 
 print("Successfully fetched data for {}".format(success_list))
 
-print("Failed to fetch data for {}".format(fail_list))
+if len(fail_list):
+    print("Failed to fetch data for {}".format(fail_list))

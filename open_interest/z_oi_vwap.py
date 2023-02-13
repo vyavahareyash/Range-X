@@ -5,7 +5,7 @@ import os
 # os.system("pip install seaborn")
 # os.system("pip install scipy")
 # os.system("pip install PIL")
-os.system("cls")
+# os.system("cls")
 
 import numpy as np
 import pandas as pd
@@ -14,13 +14,16 @@ import seaborn as sns
 import scipy as sp
 from PIL import Image
 
-plotExists=os.path.exists("z_oi_vwap_plots")
-if(not plotExists):
-    os.makedirs("z_oi_vwap_plots")
+destination_folder = "z_oi_vwap_plots_JAN_FEB"
+source_folder = "z_flags_JAN_FEB"
 
-dataExists=os.path.exists("z_flags")
+plotExists=os.path.exists(destination_folder)
+if(not plotExists):
+    os.makedirs(destination_folder)
+
+dataExists=os.path.exists(source_folder)
 if(dataExists):
-    company_list = os.listdir('z_flags')
+    company_list = os.listdir(source_folder)
 else:
     exit('Data does not exists')
 
@@ -40,9 +43,15 @@ rCount=0
 gList=[]
 rList=[]
 
+# Demo list
+# company_list=[]
+# demo_list = ['BAJAJFINSV','BHARTIARTL','DRREDDY','KOTAKBANK','NATIONALUM','PAGEIND','PFC','RELIANCE','TVSMOTOR','ULTRACEMCO','UPL','WIPRO']
+# for company in demo_list:
+#     company_list.append(company+'.xlsx')
+
 for company in company_list:
     try:
-        data = pd.read_excel('z_flags/{}'.format(company))
+        data = pd.read_excel(f'{source_folder}/{company}')
         
         plt.clf()
         f1 = sns.lmplot(x='VWAP', y='OI_Combined', data=data)
@@ -51,7 +60,7 @@ for company in company_list:
         plt.scatter(x='VWAP', y='OI_Combined', data=data[data['TotalFlag']>0],color='red')
         plt.title('{}'.format(company.split('.')[0]))
         plt.grid(color='lightgrey')
-        plt.savefig('z_oi_vwap_plots/img1.png',dpi=500)
+        plt.savefig(f'{destination_folder}/img1.png',dpi=500)
         
         data.drop(data[data['TotalFlag']>0].index,inplace=True)
         
@@ -69,12 +78,12 @@ for company in company_list:
             rList.append(company.split('.')[0])
         plt.title('{} flags'.format(company.split('.')[0]),color=color)
         plt.grid(color='lightgrey')
-        plt.savefig('z_oi_vwap_plots/img2.png',dpi=500)
+        plt.savefig(f'{destination_folder}/img2.png',dpi=500)
         
-        im1 = Image.open('z_oi_vwap_plots/img1.png')
-        im2 = Image.open('z_oi_vwap_plots/img2.png')
+        im1 = Image.open(f'{destination_folder}/img1.png')
+        im2 = Image.open(f'{destination_folder}/img2.png')
 
-        get_concat_h(im1, im2).save('z_oi_vwap_plots/{}.png'.format(company.split('.')[0]))
+        get_concat_h(im1, im2).save(f'{destination_folder}/{company.split(".")[0]}.png')
         plt.close()
         print('Plot created for {}'.format(company.split('.')[0]))
     
@@ -84,7 +93,7 @@ for company in company_list:
         print('Error occured for {}'.format(company.split('.')[0]))
         print(str(e))    
 
-os.remove('z_oi_vwap_plots/img1.png')
-os.remove('z_oi_vwap_plots/img2.png')
+os.remove(f'{destination_folder}/img1.png')
+os.remove(f'{destination_folder}/img2.png')
 
 print('{} Charts show improved relation after removing flags\n{}\n{} Charts show decline in relation after removing flags\n{}'.format(gCount,gList,rCount,rList))
