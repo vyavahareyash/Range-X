@@ -14,8 +14,8 @@ import seaborn as sns
 import scipy as sp
 from PIL import Image
 
-destination_folder = "z_oi_vwap_plots"
-source_folder = "z_flags"
+destination_folder = "z_oi_vwap_plots_JAN_FEB"
+source_folder = "z_flags_JAN_FEB"
 
 plotExists=os.path.exists(destination_folder)
 if(not plotExists):
@@ -42,6 +42,12 @@ gCount=0
 rCount=0
 gList=[]
 rList=[]
+
+# Demo list
+# company_list=[]
+# demo_list = ['BAJAJFINSV','BHARTIARTL','DRREDDY','KOTAKBANK','NATIONALUM','PAGEIND','PFC','RELIANCE','TVSMOTOR','ULTRACEMCO','UPL','WIPRO']
+# for company in demo_list:
+#     company_list.append(company+'.xlsx')
 
 for company in company_list:
     try:

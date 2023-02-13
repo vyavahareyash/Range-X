@@ -6,8 +6,8 @@ import os
 # os.system("pip install openpyxl")
 # os.system("cls")
 
-destination_folder = "z_flags_DEC_JAN"
-source_folder = "oi_data_DEC_JAN"
+destination_folder = "z_flags_JAN_FEB"
+source_folder = "oi_data_JAN_FEB"
 
 flagExists=os.path.exists(destination_folder)
 if(not flagExists):
