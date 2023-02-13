@@ -1,14 +1,17 @@
 import os
-os.system("pip install pandas")
-os.system("pip install numpy")
-os.system("pip install warnings")
-os.system("pip install jinja2")
-os.system("pip install openpyxl")
-os.system("cls")
+# os.system("pip install pandas")
+# os.system("pip install numpy")
+# os.system("pip install warnings")
+# os.system("pip install jinja2")
+# os.system("pip install openpyxl")
+# os.system("cls")
 
-flagExists=os.path.exists("z_flags")
+destination_folder = "z_flags_DEC_JAN"
+source_folder = "oi_data_DEC_JAN"
+
+flagExists=os.path.exists(destination_folder)
 if(not flagExists):
-    os.makedirs("z_flags")
+    os.makedirs(destination_folder)
 
 import numpy as np
 import pandas as pd
@@ -16,9 +19,9 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-dataExists=os.path.exists("oi_data")
+dataExists=os.path.exists(source_folder)
 if(dataExists):
-    company_list = os.listdir('oi_data')
+    company_list = os.listdir(source_folder)
 else:
     exit('Data does not exists')
     
@@ -48,7 +51,7 @@ for company in company_list:
     try:
         print('\n'+str(j)+')')
         j+=1
-        data = pd.read_csv("oi_data/{}".format(company))
+        data = pd.read_csv(f"{source_folder}/{company}")
         n = len(data)
         data.drop(np.arange(n-5,n),inplace=True)
         mean = data.mean()
@@ -98,9 +101,9 @@ for company in company_list:
         data.style.apply(color_red, subset=['OIFlag', 'VWAPFlag', 'DeliveryFlag'], 
                     axis=0).apply(color_green, subset=['OIFlag', 'VWAPFlag', 'DeliveryFlag'],
                                     axis=0).apply(color_yellow, subset=['TotalFlag'],
-                                                  axis=0).to_excel('z_flags/{}.xlsx'.format(company.split('.')[0].split('_')[2]), index = False)
+                                                  axis=0).to_excel('{}/{}.xlsx'.format(destination_folder,company.split('.')[0].split('_')[0]), index = False)
         
-        print('Flags created for {}'.format(company.split('.')[0].split('_')[2]))
+        print('Flags created for {}'.format(company.split('.')[0].split('_')[0]))
                 
     except Exception as e:
         print(str(e))
