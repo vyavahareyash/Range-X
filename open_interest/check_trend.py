@@ -19,6 +19,11 @@ destExists = os.path.exists(destination_folder)
 if not destExists:
     os.makedirs(destination_folder)
     
+def color_green(column):
+    pos = 'background-color: green'
+    default = ''
+    return [pos if v else default for v in column]
+
 stock_list = []
 fd_1_list = []
 fd_2_list = []
@@ -70,23 +75,23 @@ for company in company_list:
         print(f'Failed for {company.split(".")[0]}')
         print(str(e))
 
-df = pd.DataFrame()
+data = pd.DataFrame()
 
-df['company'] = stock_list
-df['flaggedDays_1'] = fd_1_list
-df['flaggedDays_2'] = fd_2_list
-df['totalFlags_1'] = tf_1_list
-df['totalFlags_2'] = tf_2_list
-df['r_1'] = r1_list
-df['r_2'] = r2_list
+data['company'] = stock_list
+data['flaggedDays_1'] = fd_1_list
+data['flaggedDays_2'] = fd_2_list
+data['totalFlags_1'] = tf_1_list
+data['totalFlags_2'] = tf_2_list
+data['r_1'] = r1_list
+data['r_2'] = r2_list
 # df['r_1_f'] = r1_f_list
 # df['r_2_f'] = r2_f_list
-df['strong_corr'] = abs(df['r_1'])>0.7
-df['stable_corr'] = abs(df['r_1'] - df['r_2']) <= 0.2
-df['strong_stable'] = df.apply(lambda row: row.strong_corr and row.stable_corr,axis=1)
-df.sort_values(by='company',inplace=True)
+data['strong_corr'] = abs(data['r_1'])>0.7
+data['stable_corr'] = abs(data['r_1'] - data['r_2']) <= 0.2
+data['strong_stable'] = data.apply(lambda row: row.strong_corr and row.stable_corr,axis=1)
+data.sort_values(by='company',inplace=True)
 
-focus_list = list(df[df['strong_stable']]['company'])   #list of companies to focus
+focus_list = list(data[data['strong_stable']]['company'])   #list of companies to focus
 
 if (not os.path.exists('record_analysis.txt')):     #create text file if not exists already
     open('record_analysis.txt', 'x')                #store company names in text file
@@ -95,5 +100,6 @@ record_analysis = open('record_analysis.txt', 'w')  #open text file in write mod
 
 for i in focus_list:                                #add each company in list to text file
     record_analysis.write(str(i)+' ')
-
-df.to_excel(f'{destination_folder}/{source_folder_1.split("_")[2]}_{source_folder_2.split("_")[3]}_analysis.xlsx',index=False)
+    
+data.style.apply(color_green, subset=['strong_corr', 'stable_corr', 'strong_stable'], 
+                    axis=0).to_excel(f'{destination_folder}/{source_folder_1.split("_")[2]}_{source_folder_2.split("_")[3]}_analysis.xlsx',index=False)
