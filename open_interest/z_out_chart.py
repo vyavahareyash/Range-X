@@ -5,7 +5,7 @@ import os
 # os.system("pip install --upgrade seaborn")
 # os.system("pip install --upgrade math")
 # os.system("pip install --upgrade scipy")
-os.system("cls")
+# os.system("cls")
 
 import numpy as np
 import pandas as pd
@@ -14,27 +14,30 @@ import seaborn as sns
 import math
 import scipy as sp
 
-dataExists=os.path.exists("z_flags")
+source_folder = "z_flags"
+destination_folder = "z_out_charts"
+
+dataExists=os.path.exists(source_folder)
 if(dataExists):
-    company_list = os.listdir('z_flags')
+    company_list = os.listdir(source_folder)
 else:
     exit('Data does not exists')
 
-chartExists=os.path.exists("z_out_charts")
+chartExists=os.path.exists(destination_folder)
 if(not chartExists):
-    os.makedirs("z_out_charts")
+    os.makedirs(destination_folder)
     
-chartExists=os.path.exists("z_out_charts/Delivery")
+chartExists=os.path.exists(f"{destination_folder}/Delivery")
 if(not chartExists):
-    os.makedirs("z_out_charts/Delivery")
+    os.makedirs(f"{destination_folder}/Delivery")
 
-chartExists=os.path.exists("z_out_charts/OI")
+chartExists=os.path.exists(f"{destination_folder}/OI")
 if(not chartExists):
-    os.makedirs("z_out_charts/OI")
+    os.makedirs(f"{destination_folder}/OI")
     
-chartExists=os.path.exists("z_out_charts/VWAP")
+chartExists=os.path.exists(f"{destination_folder}/VWAP")
 if(not chartExists):
-    os.makedirs("z_out_charts/VWAP")
+    os.makedirs(f"{destination_folder}/VWAP")
     
     
 delList=[]
@@ -42,7 +45,7 @@ oiList=[]
 vwapList=[]
 
 for company in company_list:
-    data = pd.read_excel('z_flags/{}'.format(company))
+    data = pd.read_excel(f'{source_folder}/{company}')
     
     delList.extend(data['PerDelivery'].dropna().tolist())
     oiList.extend(data['Change_in_OI'].dropna().tolist())
@@ -75,7 +78,7 @@ def annotate_vwap(data, **kws):
     
 for company in company_list:
     try:
-        data = pd.read_excel("z_flags/{}".format(company))
+        data = pd.read_excel(f"{source_folder}/{company}")
         # n = len(data)
         # data.drop(np.arange(n-5,n),inplace=True)
         
@@ -107,7 +110,7 @@ for company in company_list:
         g.map_dataframe(annotate_del)
         plt.legend()
         plt.title('{}'.format(company.split('.')[0]))
-        plt.savefig('z_out_charts/Delivery/Delivery_{}.png'.format(company.split('.')[0]),dpi=500)
+        plt.savefig('{}/Delivery/Delivery_{}.png'.format(destination_folder,company.split('.')[0]),dpi=500)
         
         plt.clf()
         f_data=data[abs(data['OIFlag'])>0]
@@ -124,7 +127,7 @@ for company in company_list:
         g.map_dataframe(annotate_oi)
         plt.legend()
         plt.title('{}'.format(company.split('.')[0]))
-        plt.savefig('z_out_charts/OI/OI_{}.png'.format(company.split('.')[0]),dpi=500)
+        plt.savefig('{}/OI/OI_{}.png'.format(destination_folder,company.split('.')[0]),dpi=500)
 
         plt.clf()
         f_data=data[abs(data['VWAPFlag'])>0]
@@ -141,7 +144,7 @@ for company in company_list:
         g.map_dataframe(annotate_vwap)
         plt.legend()
         plt.title('{}'.format(company.split('.')[0]))
-        plt.savefig('z_out_charts/VWAP/VWAP_{}.png'.format(company.split('.')[0]),dpi=500)
+        plt.savefig('{}/VWAP/VWAP_{}.png'.format(destination_folder,company.split('.')[0]),dpi=500)
         plt.clf()
         plt.close()
         
