@@ -93,12 +93,12 @@ data.sort_values(by='company',inplace=True)
 
 focus_list = list(data[data['strong_stable']]['company'])   #list of companies to focus
 
-if (not os.path.exists('record_analysis.txt')):     #create text file if not exists already
-    open('record_analysis.txt', 'x')                #store company names in text file
-open('record_analysis.txt','w').close()             #clear the contents of text file
-record_analysis = open('record_analysis.txt', 'w')  #open text file in write mode
+if (not os.path.exists('record_analysis.txt')):             #create text file if not exists already
+    open('record_analysis.txt', 'x')                        #store company names in text file
+open('record_analysis.txt','w').close()                     #clear the contents of text file
+record_analysis = open('record_analysis.txt', 'w')          #open text file in write mode
 
-for i in focus_list:                                #add each company in list to text file
+for i in focus_list:                                        #add each company in list to text file
     record_analysis.write(str(i)+' ')
     
 data.style.apply(color_green, subset=['strong_corr', 'stable_corr', 'strong_stable'], 
