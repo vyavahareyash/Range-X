@@ -78,36 +78,14 @@ def get_table(company,startTime,timeFolder):
     nMos=0
 
     # //////////////////////////////
-    def get_targets(day):
-        today = dayset[day]
-        si=today.index[0]
-        ei=si + len(today)
-        selectedCandle=today.loc[si]
-        #date=selectedCandle['Date']
-        high=float(selectedCandle['high'])
-        low=float(selectedCandle['low'])
-        upperBound=high+pMos
-        lowerBound=low-nMos
-        targetVars = []
-        for i in range(si+1, si+len(today)):
-            
-            j = i 
-            if today['high'].loc[j]>upperBound and today['high'].loc[j-1]<upperBound:
-                print(today['high'].loc[j])
-                target = -math.inf
-                while(today['high'].loc[j]>upperBound):
-                    print(today['high'].loc[j], target)
-                    if today['high'].loc[j]>target:
-                        target = today['high'].loc[j]
-                    j+=1
-                    if j == ei:
-                        break
-                targetVars.append(target)
-        return targetVars
+    def get_targets(dayset,day):
+        pass
+        # return targetVars
           
             
                 
     # ////////////////////////////
+    targetarray=[]
     for day in range(totalDays-1):
 
         #start index of day
@@ -146,9 +124,36 @@ def get_table(company,startTime,timeFolder):
                 tr+=1
 
         table.loc[day]=[date,sw,candle_size,pDelta,nDelta,tr]
-        table.loc[day]['targets']=get_targets(day)
+        
+        
+        today = dayset[day]
+        
+        # si=today.index[0]
+        # ei=si + len(today)
+        # selectedCandle=today.loc[si]
+        #date=selectedCandle['Date']
+        # high=float(selectedCandle['high'])
+        # low=float(selectedCandle['low'])
+        # upperBound=high+pMos
+        # lowerBound=low-nMos
+        targetVars = []
+        for i in range(si+1, si+len(today)):
+            j = i 
+            if today['high'].loc[j]>upperBound and today['high'].loc[j-1]<upperBound:
+                # print(today['high'].loc[j])
+                target = -math.inf
+                while(today['high'].loc[j]>upperBound):
+                    # print(today['high'].loc[j], target)
+                    if today['high'].loc[j]>target:
+                        target = today['high'].loc[j]
+                    j+=1
+                    if j == ei:
+                        break
+                if target>0:
+                    targetVars.append(target-upperBound)
+        targetarray.append(targetVars)
 
-
+    table['Ptargets']=targetarray
     table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company),index=False)
     # os.system("cls")
     print("Table created for {}\n".format(company))
