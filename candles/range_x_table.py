@@ -9,7 +9,7 @@ fetchedDataList = os.listdir('data')
 for i in range(len(fetchedDataList)):
     fetchedDataList[i]=fetchedDataList[i].split('.')[0]
 
-# fetchedDataList = ['RELIANCE_data']
+fetchedDataList = ['RELIANCE_data']
 
 startTime=input('Enter start time [hh:mm] = ')
 timeFolder=f'{startTime[:2]}_{startTime[3:]}'
