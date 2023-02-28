@@ -8,12 +8,13 @@ from nsepy import get_history
 from datetime import date
 import pandas as pd
 
-destination_folder = "oi_data_JAN_FEB"
+destination_folder = "oi_data_DEC_JAN"
+
+# destination_folder = "oi_data_JAN_FEB"
 
 oiExists=os.path.exists(destination_folder)
 if(not oiExists):
     os.makedirs(destination_folder)
-
 
 company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BAJFINANCE','BALKRISIND','AUROPHARMA',
      'BANKBARODA','BHARTIARTL','BEL','BPCL','BRITANNIA','CENTURYTEX','CANBK','CESC','COALINDIA','CIPLA',
@@ -34,7 +35,7 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
 # company_list = ['PVR']
 
 n_comp = len(company_list)
-print(f"Fetching data for {n_comp}")
+print(f"Fetching data for {n_comp} companies")
 success_count = 0
 fail_count = 0
 i = 1
@@ -45,23 +46,23 @@ for stock in company_list:
         print("\n"+str(i)+")")
         i += 1
         
-        start=start=date(2023,1,1)
-        end=date(2023,2,23)
-        end2=date(2023,2,23)
-        # start=start=date(2022,12,1)
-        # end=date(2023,1,25)
-        # end2=date(2023,1,25)
+        # start=start=date(2023,1,1)
+        # end=date(2023,2,23)
+        # end2=date(2023,2,23)
+        start=start=date(2022,12,1)
+        end=date(2023,1,25)
+        end2=date(2023,1,25)
         
-        data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2023,1,25))
-        data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,2,23))
-        # data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2022,12,29))
-        # data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,1,25))
+        # data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2023,1,25))
+        # data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,2,23))
+        data_fut = get_history(symbol=stock,futures=True,start=start, end=end, expiry_date=date(2022,12,29))
+        data_fut2 = get_history(symbol=stock,futures=True,start=start, end=end2, expiry_date=date(2023,1,25))
 
         data_fut=data_fut.reset_index()
         data_fut2=data_fut2.reset_index()
 
-        # data_vwap=get_history(symbol=stock, start=date(2022,12,1), end=date(2023,1,25))
-        data_vwap=get_history(symbol=stock, start=date(2023,1,1), end=date(2023,2,23))
+        data_vwap=get_history(symbol=stock, start=date(2022,12,1), end=date(2023,1,25))
+        # data_vwap=get_history(symbol=stock, start=date(2023,1,1), end=date(2023,2,23))
         
         data_vwap=data_vwap.reset_index()
 
@@ -83,6 +84,10 @@ for stock in company_list:
         OI_df['Change_in_VWAP']=OI_df.VWAP.sub(OI_df.VWAP.shift(1))
         OI_df['Change_in_VWAP']=(OI_df['Change_in_VWAP'])/(OI_df['VWAP'])
         OI_df['Change_in_VWAP']=100*OI_df['Change_in_VWAP']
+        
+        OI_df['Change_in_Volume']=OI_df.Volume.sub(OI_df.Volume.shift(1))
+        OI_df['Change_in_Volume']=(OI_df['Change_in_Volume'])/(OI_df['Volume'])
+        OI_df['Change_in_Volume']=100*OI_df['Change_in_Volume']
         
         OI_df["PerDelivery"] = (OI_df["Delivery"]/OI_df["Volume"])*100
 

@@ -10,6 +10,7 @@ def get_table(company,startTime,timeFolder):
     hh = int(startTime.split(':')[0])
     mm = int(startTime.split(':')[1])
     
+    # Remove the candles before start time
     for i in range(len(dataset)):
         dFlag=0
         if(int(dataset['Time'][i][0:2])<hh):
@@ -29,6 +30,7 @@ def get_table(company,startTime,timeFolder):
     j=0
     k=0
     dayset=[]
+    #Create day sets
     while(i<len(dataset)-1):
         currDate=dataset['Date'][i]
         nextDate=dataset['Date'][i+1]
@@ -45,6 +47,7 @@ def get_table(company,startTime,timeFolder):
         k+=1
     dayset.append(dataset[j:][:])
 
+    #Gets candle type
     def candle_type(upperBound,lowerBound,high,low):
         if (high <= upperBound and low >= lowerBound):
             return 1
@@ -68,6 +71,7 @@ def get_table(company,startTime,timeFolder):
     pMos=0
     nMos=0
 
+    
     for day in range(totalDays-1):
 
         #start index of day

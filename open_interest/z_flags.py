@@ -6,6 +6,9 @@ import os
 # os.system("pip install openpyxl")
 # os.system("cls")
 
+# destination_folder = "z_flags_DEC_JAN"
+# source_folder = "oi_data_DEC_JAN"
+
 destination_folder = "z_flags_JAN_FEB"
 source_folder = "oi_data_JAN_FEB"
 
@@ -96,7 +99,7 @@ for company in company_list:
         
         data['TotalFlag']=abs(data['DeliveryFlag'])+abs(data['OIFlag'])+abs(data['VWAPFlag'])
         
-        data = data.loc[:,['Date', 'Symbol', 'Open Interest', 'Open Interest.1', 'OI_Combined', 'VWAP', 'Volume', 'Delivery', 'Change_in_OI', 'OIFlag', 'z_oi', 'Change_in_VWAP', 'VWAPFlag', 'z_vwap', 'PerDelivery', 'DeliveryFlag', 'z_del', 'TotalFlag']]
+        data = data.loc[:,['Date', 'Symbol', 'Open Interest', 'Open Interest.1', 'OI_Combined', 'VWAP', 'Volume', 'Change_in_Volume', 'Delivery', 'Change_in_OI', 'OIFlag', 'z_oi', 'Change_in_VWAP', 'VWAPFlag', 'z_vwap', 'PerDelivery', 'DeliveryFlag', 'z_del', 'TotalFlag']]
         
         data.style.apply(color_red, subset=['OIFlag', 'VWAPFlag', 'DeliveryFlag'], 
                     axis=0).apply(color_green, subset=['OIFlag', 'VWAPFlag', 'DeliveryFlag'],
