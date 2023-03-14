@@ -126,7 +126,7 @@ def get_table_count(company,startTime,pMos,nMos):
 #      'HDFCLIFE','NAUKRI']
 
 #Demo List
-company_list = ['RELIANCE']
+company_list = ['BAJAJFINSV', 'BHARTIARTL' ,'BRITANNIA' ,'KOTAKBANK', 'NATIONALUM', 'PFC', 'RELIANCE', 'WIPRO']
 
 
 # startTime='10:15'

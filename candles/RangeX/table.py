@@ -4,7 +4,7 @@ import math
 
 
 # ///////////////////////////////////////////////////////////////////////
-def get_table(company,startTime,timeFolder):
+def get_table(company,startTime,timeFolder,pMos=0,nMos=0):
     import numpy as np
     import pandas as pd
 
@@ -74,8 +74,8 @@ def get_table(company,startTime,timeFolder):
 
     #day no.
     day=0
-    pMos=0
-    nMos=0
+    # pMos=0
+    # nMos=0
 
     # //////////////////////////////
     def get_targets(dayset,day):
