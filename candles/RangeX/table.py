@@ -1,21 +1,18 @@
 import math
-
-
-
+import numpy as np
+import pandas as pd
 
 # ///////////////////////////////////////////////////////////////////////
-def get_table(company,startTime,timeFolder,pMos=0,nMos=0):
-    import numpy as np
-    import pandas as pd
+def get_table(company,startTime,timeFolder,pMos=0,nMos=0,save=True):
 
     dataset=pd.read_csv('data/{}.csv'.format(company))
-    
+
     dataset['Date'] = [ x.split(' ')[0] for x in dataset['datetime'].tolist() ]
     dataset['Time'] = [ x.split(' ')[1] for x in dataset['datetime'].tolist() ]
 
     hh = int(startTime.split(':')[0])
     mm = int(startTime.split(':')[1])
-    
+
     # Remove the candles before start time
     for i in range(len(dataset)):
         dFlag=0
@@ -26,7 +23,7 @@ def get_table(company,startTime,timeFolder,pMos=0,nMos=0):
         if dFlag==1:
             dataset.drop(i,inplace=True)
     #time variable
-#     print(dataset)
+    # print(dataset)
     dataset.reset_index(inplace=True,drop=True)
 
     cols=['Date','S_Window','Candle_size','pDelta','nDelta','tReversal']
@@ -125,6 +122,7 @@ def get_table(company,startTime,timeFolder,pMos=0,nMos=0):
 
         table.loc[day]=[date,sw,candle_size,pDelta,nDelta,tr]
         
+        count = len(table[table['tReversal']!=0])
         
         today = dayset[day]
         
@@ -154,7 +152,9 @@ def get_table(company,startTime,timeFolder,pMos=0,nMos=0):
         targetarray.append(targetVars)
 
     table['Ptargets']=targetarray
-    table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company),index=False)
+    if(save):
+        table.to_csv("tables/{}/{}_table.csv".format(timeFolder,company),index=False)
+        print("Table created for {}\n".format(company))
     # os.system("cls")
-    print("Table created for {}\n".format(company))
+    return count, totalDays
 

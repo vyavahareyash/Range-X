@@ -1,6 +1,7 @@
 import os
 from RangeX import data as d
 
+# Check if data folder exists and create folder
 dataExists=os.path.exists("data")
 if(not dataExists):
     os.makedirs("data")
@@ -20,18 +21,19 @@ company_list = ['ADANIENT','APOLLOHOSP','APOLLOTYRE','ASIANPAINT','AXISBANK','BA
      'TATACHEM','AMBUJACEM','RBLBANK','GMRINFRA','GRASIM','IGL','MUTHOOTFIN','UBL','IDEA','AMARAJABAT','YESBANK','BANDHANBNK',
      'HDFCLIFE','NAUKRI']
 
-#Demo list
+# Test list
 company_list = ['RELIANCE']
 
-
+# Initialize empty list to store the successfully fetched company names 
 fetchedDataList=[]
 
+# Fetch data in multiple rounds to retry for failed companies
 round=1
-while(round<=3):
+while(round<=3): 
      print("Round "+str(round)+"\n")
      if round!=1:
           print("Retrying for "+str(failedList)+"\n")
-     print("Fetching data for {} company(s)\n".format(len(company_list)))
+     print(f"Fetching data for {len(company_list)} company(s)\n")
      successList, failedList = d.getData(company_list)
      fetchedDataList = fetchedDataList + successList
      if not len(failedList):
@@ -40,7 +42,7 @@ while(round<=3):
      round+=1
 
 # os.system("cls")
-print("{} data files fetched successfully\n".format(len(fetchedDataList)))
+print(f"{len(fetchedDataList)} data files fetched successfully\n")
 print("Successfully fetched "+str(fetchedDataList)+"\n")
 print("Failed to fetch "+str(failedList)+"\n")
 

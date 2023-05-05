@@ -115,8 +115,8 @@ df = pd.DataFrame(columns=['pMos','nMos','count'])
 # startTime='10:15'
 company = input('Enter company name: ')
 startTime=input('Enter start time [hh:mm] = ')
-pMosLimit = int(input('Enter pMos Limit = ')) 
-nMosLimit = int(input('Enter nMos Limit = ')) 
+pMosLimit = int(input('Enter pMos Limit = '))
+nMosLimit = int(input('Enter nMos Limit = '))
 pMosList = np.arange(pMosLimit)
 nMosList = np.arange(nMosLimit)
 plist=[]
