@@ -2,6 +2,7 @@
 *.csv
 *.xlsx
 *.png
+.vscode/*
 #Python.gitignore
 
 # Byte-compiled / optimized / DLL files
